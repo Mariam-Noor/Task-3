@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Elements | DecodeLabs Project 3</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Header -->
+        <div class="header">
+            <h1>⚡ Interactive Web Elements</h1>
+            <p>Engineering the Client-Side Nervous System</p>
+            <div class="badge">Project 3 | DecodeLabs 2026</div>
+        </div>
+
+        <!-- Controls Bar - JavaScript Hook uses js- prefix -->
+        <div class="controls-bar">
+            <button class="theme-toggle js-theme-toggle" aria-label="Toggle Dark Mode">
+                🌙 Dark Mode
+            </button>
+        </div>
+
+        <!-- Card Grid - Interactive Elements -->
+        <div class="card-grid">
+            
+            <!-- CARD 1: Counter with Dynamic Updates -->
+            <div class="card">
+                <h2>📊 Dynamic Counter</h2>
+                <h3>Input → Process → Output in action</h3>
+                
+                <div class="counter-display">
+                    <div class="counter-number js-counter-value">0</div>
+                </div>
+                
+                <div class="counter-buttons">
+                    <button class="btn js-counter-decr">− Decrease</button>
+                    <button class="btn btn-success js-counter-incr">+ Increase</button>
+                    <button class="btn btn-outline js-counter-reset">⟳ Reset</button>
+                </div>
+                
+                <p style="margin-top: 1rem; font-size: 0.85rem;">
+                    💡 State stored in <code>let count</code> → Updates DOM via <code>textContent</code>
+                </p>
+            </div>
+
+            <!-- CARD 2: Toggleable Content -->
+            <div class="card">
+                <h2>🔓 Toggleable Content</h2>
+                <h3>Dynamic visibility with CSS classes</h3>
+                
+                <button class="btn js-toggle-btn">📖 Show/Hide Secret Message</button>
+                
+                <!-- Toggleable content - uses is- prefix for visual state -->
+                <div class="js-content is-hidden">
+                    <strong>🎉 You found the secret!</strong>
+                    <p style="margin-top: 0.5rem;">
+                        This content toggles using <code>classList.toggle('is-hidden')</code>. 
+                        The JavaScript only handles the behavior — CSS handles the animation!
+                    </p>
+                    <hr style="margin: 1rem 0;">
+                    <p>✨ "The only way to do great work is to love what you do." — Steve Jobs</p>
+                </div>
+                
+                <p style="margin-top: 1rem; font-size: 0.85rem;">
+                    💡 JavaScript: <code>classList.toggle()</code> → CSS: <code>.is-hidden { display: none; }</code>
+                </p>
+            </div>
+
+            <!-- CARD 3: Interactive Counter + Progress Bar -->
+            <div class="card">
+                <h2>📈 Goal Tracker</h2>
+                <h3>Reach the target (0 to 100)</h3>
+                
+                <div class="counter-display">
+                    <div class="counter-number js-goal-counter">0</div>
+                    <p style="font-size: 0.9rem;">/ 100</p>
+                </div>
+                
+                <div class="progress-bar-container">
+                    <div class="js-progress-fill" style="width: 0%;">0%</div>
+                </div>
+                
+                <div class="counter-buttons">
+                    <button class="btn js-goal-decr">−</button>
+                    <button class="btn btn-success js-goal-incr">+</button>
+                    <button class="btn btn-outline js-goal-reset">Reset</button>
+                </div>
+                
+                <p style="margin-top: 1rem; font-size: 0.85rem;" class="js-goal-message">
+                    📍 Add points to reach 100!
+                </p>
+            </div>
+        </div>
+
+        <!-- IPO Loop Explanation -->
+        <div class="progress-section">
+            <h2 style="margin-bottom: 1rem;">🔄 The IPO Loop in Action</h2>
+            <div class="ipo-grid">
+                <div class="ipo-card">
+                    <strong class="ipo-input">📥 INPUT</strong>
+                    <p>User clicks button, presses key, or interacts with UI</p>
+                </div>
+                <div class="ipo-card">
+                    <strong class="ipo-process">⚙️ PROCESS</strong>
+                    <p>JavaScript reads state, calculates next value, updates variables</p>
+                </div>
+                <div class="ipo-card">
+                    <strong class="ipo-output">📤 OUTPUT</strong>
+                    <p>DOM updates → User sees new content, colors, or visibility</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🧠 Built with Vanilla JavaScript | IPO Loop | Decoupled Logic</p>
+            <p class="footer-small">js- prefix for JS hooks | is- prefix for visual states | No innerHTML used</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

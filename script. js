@@ -1,0 +1,221 @@
+// ========================================
+// JAVASCRIPT (The Nervous System)
+// All DOM manipulation, event handling, and state management
+// IPO Loop: Input → Process → Output
+// ========================================
+
+// Wait for DOM to be fully loaded before running
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ========== DARK MODE TOGGLE ==========
+    // INPUT: User clicks button
+    // PROCESS: Check current state, update localStorage
+    // OUTPUT: Toggle .dark-mode class on body
+    
+    const themeToggle = document.querySelector('.js-theme-toggle');
+    const body = document.body;
+    
+    // Check for saved preference in localStorage
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️ Light Mode';
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            // INPUT captured
+            body.classList.toggle('dark-mode');
+            
+            // PROCESS: Store preference
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                themeToggle.textContent = '☀️ Light Mode';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                themeToggle.textContent = '🌙 Dark Mode';
+            }
+            // OUTPUT handled by CSS
+        });
+    }
+
+    // ========== COUNTER 1: Simple Counter ==========
+    // State management with 'let' (value mutates)
+    
+    let count = 0;
+    const counterValue = document.querySelector('.js-counter-value');
+    const counterIncr = document.querySelector('.js-counter-incr');
+    const counterDecr = document.querySelector('.js-counter-decr');
+    const counterReset = document.querySelector('.js-counter-reset');
+    
+    function updateCounterDisplay() {
+        // Safe textContent injection (no innerHTML)
+        if (counterValue) {
+            counterValue.textContent = count;
+        }
+    }
+    
+    if (counterIncr) {
+        counterIncr.addEventListener('click', function() {
+            count++;
+            updateCounterDisplay();
+        });
+    }
+    
+    if (counterDecr) {
+        counterDecr.addEventListener('click', function() {
+            count--;
+            updateCounterDisplay();
+        });
+    }
+    
+    if (counterReset) {
+        counterReset.addEventListener('click', function() {
+            count = 0;
+            updateCounterDisplay();
+        });
+    }
+
+    // ========== TOGGLEABLE CONTENT ==========
+    // Using classList.toggle() - professional standard
+    
+    const toggleBtn = document.querySelector('.js-toggle-btn');
+    const toggleContent = document.querySelector('.js-content');
+    
+    if (toggleBtn && toggleContent) {
+        toggleBtn.addEventListener('click', function() {
+            // classList.toggle() adds/removes 'is-hidden' class
+            // CSS handles the visual change
+            toggleContent.classList.toggle('is-hidden');
+            
+            // Bonus: Update button text based on state
+            if (toggleContent.classList.contains('is-hidden')) {
+                toggleBtn.textContent = '📖 Show Secret Message';
+            } else {
+                toggleBtn.textContent = '🔒 Hide Secret Message';
+            }
+        });
+    }
+
+    // ========== GOAL TRACKER (Counter with Progress Bar) ==========
+    // Demonstrates dynamic DOM updates based on state
+    
+    let goalCount = 0;
+    const MAX_GOAL = 100;
+    
+    const goalValue = document.querySelector('.js-goal-counter');
+    const progressFill = document.querySelector('.js-progress-fill');
+    const goalMessage = document.querySelector('.js-goal-message');
+    const goalIncr = document.querySelector('.js-goal-incr');
+    const goalDecr = document.querySelector('.js-goal-decr');
+    const goalReset = document.querySelector('.js-goal-reset');
+    
+    function updateGoalTracker() {
+        // Update text content
+        if (goalValue) {
+            goalValue.textContent = goalCount;
+        }
+        
+        // Calculate percentage
+        const percentage = (goalCount / MAX_GOAL) * 100;
+        const boundedPercentage = Math.min(100, Math.max(0, percentage));
+        
+        // Update progress bar width and text
+        if (progressFill) {
+            progressFill.style.width = boundedPercentage + '%';
+            progressFill.textContent = Math.floor(boundedPercentage) + '%';
+        }
+        
+        // Update message based on state
+        if (goalMessage) {
+            if (goalCount >= MAX_GOAL) {
+                goalMessage.innerHTML = '🎉 GOAL ACHIEVED! Amazing work! 🎉';
+                goalMessage.style.color = 'var(--success)';
+                if (progressFill) {
+                    progressFill.style.background = 'linear-gradient(90deg, #00b894, #55efc4)';
+                }
+            } else if (goalCount > MAX_GOAL) {
+                goalMessage.innerHTML = '⚠️ You\'ve exceeded the goal! Click Reset to try again.';
+                goalMessage.style.color = 'var(--warning)';
+            } else if (goalCount > 70) {
+                goalMessage.innerHTML = '🔥 Almost there! Keep going!';
+                goalMessage.style.color = 'var(--accent)';
+            } else {
+                goalMessage.innerHTML = '📍 Add points to reach 100!';
+                goalMessage.style.color = 'var(--text-secondary)';
+            }
+        }
+    }
+    
+    if (goalIncr) {
+        goalIncr.addEventListener('click', function() {
+            if (goalCount < MAX_GOAL + 20) {
+                goalCount++;
+                updateGoalTracker();
+            }
+        });
+    }
+    
+    if (goalDecr) {
+        goalDecr.addEventListener('click', function() {
+            if (goalCount > 0) {
+                goalCount--;
+                updateGoalTracker();
+            }
+        });
+    }
+    
+    if (goalReset) {
+        goalReset.addEventListener('click', function() {
+            goalCount = 0;
+            updateGoalTracker();
+        });
+    }
+    
+    // Initialize goal tracker
+    updateGoalTracker();
+
+    // ========== BONUS: Keyboard Interaction ==========
+    // Demonstrate keyboard event listening
+    
+    document.addEventListener('keydown', function(event) {
+        // Press 'ArrowUp' to increase simple counter
+        if (event.key === 'ArrowUp') {
+            count++;
+            updateCounterDisplay();
+            // Visual feedback (temporary)
+            if (counterValue) {
+                counterValue.style.transform = 'scale(1.1)';
+                setTimeout(function() {
+                    if (counterValue) counterValue.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+        // Press 'ArrowDown' to decrease simple counter
+        else if (event.key === 'ArrowDown') {
+            count--;
+            updateCounterDisplay();
+            if (counterValue) {
+                counterValue.style.transform = 'scale(0.9)';
+                setTimeout(function() {
+                    if (counterValue) counterValue.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }
+        // Press 'r' to reset simple counter
+        else if (event.key === 'r' || event.key === 'R') {
+            count = 0;
+            updateCounterDisplay();
+        }
+        // Press 't' to toggle dark mode
+        else if (event.key === 't' || event.key === 'T') {
+            if (themeToggle) {
+                themeToggle.click();
+            }
+        }
+    });
+    
+    // Console logs to show initialization
+    console.log('✅ Interactive Web Elements Loaded');
+    console.log('📋 IPO Loop active | Event listeners attached | State managed');
+    console.log('⌨️ Try keyboard shortcuts: ↑ ↓ r t');
+});
